@@ -161,7 +161,7 @@ Slideout.prototype._initTouchEvents = function() {
   this.panel.addEventListener(touch.start, function(eve) {
     self._moved = false;
     self._opening = false;
-    self._startOffsetX = eve.touches[0].pageX;
+    self._startOffsetX = window.navigator.pointerEnabled ? eve.pageX : eve.touches[0].pageX;
     self._preventOpen = (!self.isOpen() && self.menu.clientWidth !== 0);
   });
 
@@ -190,7 +190,7 @@ Slideout.prototype._initTouchEvents = function() {
 
     if (scrolling || self._preventOpen) { return; }
 
-    var dif_x = eve.touches[0].clientX - self._startOffsetX;
+    var dif_x = window.navigator.pointerEnabled ? eve.clientX - self._startOffsetX : eve.touches[0].clientX - self._startOffsetX
     var translateX = self._currentOffsetX = dif_x;
 
     if (Math.abs(translateX) > self._padding) { return; }
